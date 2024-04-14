@@ -21,3 +21,7 @@ module.exports = {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/////////////////////////////////BACKEND//////////////////////////
+npm install cloudinary cors dotenv express mongoose nodemon openai
