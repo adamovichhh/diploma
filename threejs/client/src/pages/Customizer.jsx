@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useSnapshot } from "valtio";
+import React, { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useSnapshot } from 'valtio';
 
-import config from "../config/config";
-import state from "../store";
-import { download } from "../assets";
-import { downloadCanvasToImage, reader } from "../config/helpers";
-import { EditorTabs, FilterTabs, DecalTypes } from "../config/constants";
-import { fadeAnimation, slideAnimation } from "../config/motion";
-import {
-  CustomButton,
-  AIPicker,
-  ColorPicker,
-  FilePicker,
-  Tab,
-} from "../components";
-import { TangentSpaceNormalMap } from "three";
+import config from '../config/config';
+import state from '../store';
+import { download } from '../assets';
+import { downloadCanvasToImage, reader } from '../config/helpers';
+import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
+import { fadeAnimation, slideAnimation } from '../config/motion';
+import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -43,7 +36,7 @@ const Customizer = () => {
           readFile={readFile}
         />
       case "aipicker":
-        return <AIPicker
+        return <AIPicker 
           prompt={prompt}
           setPrompt={setPrompt}
           generatingImg={generatingImg}
@@ -55,11 +48,9 @@ const Customizer = () => {
   }
 
   const handleSubmit = async (type) => {
-    
     if(!prompt) return alert("Please enter a prompt");
 
     try {
-      // call a backend to generate an AI image
       setGeneratingImg(true);
 
       const response = await fetch('http://localhost:8080/api/v1/dalle', {
@@ -75,18 +66,16 @@ const Customizer = () => {
       const data = await response.json();
 
       handleDecals(type, `data:image/png;base64,${data.photo}`)
-      
     } catch (error) {
       alert(error)
     } finally {
-      setGeneratingImg(false)
+      setGeneratingImg(false);
       setActiveEditorTab("");
     }
-
   }
 
   const handleDecals = (type, result) => {
-    const decalType = DecalTypes[type]
+    const decalType = DecalTypes[type];
 
     state[decalType.stateProperty] = result;
 
@@ -127,7 +116,6 @@ const Customizer = () => {
       })
   }
 
-
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -135,15 +123,15 @@ const Customizer = () => {
           <motion.div
             key="custom"
             className="absolute top-0 left-0 z-10"
-            {...slideAnimation("left")}
+            {...slideAnimation('left')}
           >
             <div className="flex items-center min-h-screen">
               <div className="editortabs-container tabs">
                 {EditorTabs.map((tab) => (
                   <Tab 
-                    key={tab.name} 
+                    key={tab.name}
                     tab={tab}
-                    handleClick={() => setActiveEditorTab(tab.name)} 
+                    handleClick={() => setActiveEditorTab(tab.name)}
                   />
                 ))}
 
@@ -156,32 +144,32 @@ const Customizer = () => {
             className="absolute z-10 top-5 right-5"
             {...fadeAnimation}
           >
-            <CustomButton
+            <CustomButton 
               type="filled"
               title="Go Back"
-              handleClick={() => (state.intro = true)}
+              handleClick={() => state.intro = true}
               customStyles="w-fit px-4 py-2.5 font-bold text-sm"
             />
           </motion.div>
 
           <motion.div
-            className="filtertabs-container"
+            className='filtertabs-container'
             {...slideAnimation("up")}
           >
             {FilterTabs.map((tab) => (
-              <Tab 
-                key={tab.name} 
-                tab={tab} 
+              <Tab
+                key={tab.name}
+                tab={tab}
                 isFilterTab
                 isActiveTab={activeFilterTab[tab.name]}
-                handleClick={() => handleActiveFilterTab(tab.name)} 
+                handleClick={() => handleActiveFilterTab(tab.name)}
               />
             ))}
           </motion.div>
         </>
       )}
     </AnimatePresence>
-  );
-};
+  )
+}
 
-export default Customizer;
+export default Customizer
