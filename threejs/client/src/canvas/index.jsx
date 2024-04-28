@@ -4,8 +4,13 @@ import { Environment, Center } from '@react-three/drei';
 import Shirt from './Shirt';
 import Backdrop from './Backdrop';
 import CameraRig from './CameraRig';
+import { useSnapshot } from 'valtio';
+
+import state from '../store';
+
 
 const CanvasModel = () => {
+  const snap = useSnapshot(state);
   return (
     <Canvas
       shadows

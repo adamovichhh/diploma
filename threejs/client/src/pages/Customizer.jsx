@@ -6,7 +6,7 @@ import config from '../config/config';
 import state from '../store';
 import { download } from '../assets';
 import { downloadCanvasToImage, reader } from '../config/helpers';
-import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
+import { EditorTabs, FilterTabs, DecalTypes,ClothesTabs } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
 
@@ -97,6 +97,21 @@ const Customizer = () => {
         state.isFullTexture = false;
         break;
     }
+  
+
+  // const handleClothesTab = (tab) => {
+  //   switch (tab.tabName) {
+  //     case "shirt":
+  //         state.currentItem = "/shirt_baked.glb";
+  //       break;
+  //     case "shirtWithoutHands":
+  //         state.currentItem = "/shirt_without_hands.glb";
+  //       break;
+  //     default:
+  //       state.currentItem = "/shirt_baked.glb";
+        
+  //       break;
+  //   }
 
     // after setting the state, activeFilterTab is updated
 
@@ -139,6 +154,25 @@ const Customizer = () => {
               </div>
             </div>
           </motion.div>
+          
+          <motion.div
+            className='changeitems-container'
+            {...slideAnimation("down")}
+          >
+            {ClothesTabs.map((tab) => (
+              <Tab
+                key={tab.name}
+                tab={tab}
+                handleClick={() => {
+                  state.currentItem = tab.object,
+                  state.rotation = tab.rotation,
+                  state.size = tab.size,
+                  state.logo_position = tab.logo_position,
+                  state.logo_size = tab.logo_size
+                }}
+              />
+            ))}
+          </motion.div>
 
           <motion.div
             className="absolute z-10 top-5 right-5"
@@ -151,7 +185,7 @@ const Customizer = () => {
               customStyles="w-fit px-4 py-2.5 font-bold text-sm"
             />
           </motion.div>
-
+          
           <motion.div
             className='filtertabs-container'
             {...slideAnimation("up")}

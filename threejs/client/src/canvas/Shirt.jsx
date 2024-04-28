@@ -8,7 +8,7 @@ import state from "../store";
 
 const Shirt = () => {
   const snap = useSnapshot(state);
-  const { nodes, materials } = useGLTF("/shirt_baked.glb");
+  const { nodes, materials } = useGLTF(snap.currentItem);
 
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
@@ -19,6 +19,8 @@ const Shirt = () => {
   return( 
     <group key={stateString}>
         <mesh
+            scale={[snap.size,snap.size,snap.size]}
+            rotation={[snap.rotation,snap.rotation,snap.rotation]}
             castShadow
             geometry={nodes.T_Shirt_male.geometry}
             material={materials.lambert1}
@@ -27,8 +29,8 @@ const Shirt = () => {
         >
             {snap.isFullTexture && (
               <Decal
-                position={[0, 0, 0]}
-                rotation={[0, 0, 0]}
+                position={[0, 0, 20]}
+                rotation={[snap.rotation,snap.rotation,snap.rotation]}
                 scale={1}
                 map={fullTexture}
               />
@@ -36,15 +38,16 @@ const Shirt = () => {
 
             {snap.isLogoTexture && (
               <Decal 
-                position={[0, 0.04, 0.15]}
-                rotation={[0, 0, 0]}
-                scale={0.15}
+                position={[snap.logo_position.x,snap.logo_position.y,snap.logo_position.z]}
+                rotation={[snap.rotation,snap.rotation,snap.rotation]}
+                scale={snap.logo_size}
                 map={logoTexture}
                 //map-anisotropy={16}
-                depthTest={false}
-                depthWrite={true}
+                depthTest={true}
+                depthWrite={false}
               />
-            )}
+              
+            )} 
         </mesh>
     </group>
   )
