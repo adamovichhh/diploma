@@ -1,4 +1,4 @@
-import { swatch, fileIcon, ai, logoShirt, stylishShirt } from "../assets";
+import { swatch, fileIcon, ai, logoShirt, stylishShirt, down, up, left, right } from "../assets";
 
 export const EditorTabs = [
   {
@@ -26,6 +26,25 @@ export const FilterTabs = [
   },
 ];
 
+export const ChangeSizeTabs = [
+  {
+    name: "up",
+    icon: up,
+  },
+  {
+    name: "down",
+    icon: down,
+  },
+  {
+    name: "left",
+    icon: left,
+  },
+  {
+    name: "right",
+    icon: right,
+  }
+];
+
 export const ClothesTabs = [
   {
     name: "shirt",
@@ -36,7 +55,7 @@ export const ClothesTabs = [
     logo_position : {
       x : 0,
       y : 0.04,
-      z : 0.15,
+      z : 0.07,
     },
     logo_size: 0.15
   },
@@ -62,7 +81,7 @@ export const ClothesTabs = [
     logo_position : {
       x : 0,
       y : 10,
-      z : 15,
+      z : 5,
     },
     logo_size: 20
   },

@@ -6,7 +6,7 @@ import config from '../config/config';
 import state from '../store';
 import { download } from '../assets';
 import { downloadCanvasToImage, reader } from '../config/helpers';
-import { EditorTabs, FilterTabs, DecalTypes,ClothesTabs } from '../config/constants';
+import { EditorTabs, FilterTabs, DecalTypes, ClothesTabs, ChangeSizeTabs  } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
 
@@ -97,21 +97,6 @@ const Customizer = () => {
         state.isFullTexture = false;
         break;
     }
-  
-
-  // const handleClothesTab = (tab) => {
-  //   switch (tab.tabName) {
-  //     case "shirt":
-  //         state.currentItem = "/shirt_baked.glb";
-  //       break;
-  //     case "shirtWithoutHands":
-  //         state.currentItem = "/shirt_without_hands.glb";
-  //       break;
-  //     default:
-  //       state.currentItem = "/shirt_baked.glb";
-        
-  //       break;
-  //   }
 
     // after setting the state, activeFilterTab is updated
 
@@ -129,6 +114,35 @@ const Customizer = () => {
         handleDecals(type, result);
         setActiveEditorTab("");
       })
+  }
+
+  const handleChangeLogoSizeTab = (tabName) => {
+    const coefficient = state.logo_size / 7;
+    switch (tabName) {
+      case "up":
+          state.logo_position.y += coefficient;
+        break;
+      case "down":
+          state.logo_position.y -= coefficient;
+        break;
+      case "left":
+        state.logo_position.x -= coefficient;
+        break;
+      case "right":
+        state.logo_position.x += coefficient;
+        break;
+      default:
+        break;
+    }
+
+    // after setting the state, activeFilterTab is updated
+
+    setActiveFilterTab((prevState) => {
+      return {
+        ...prevState,
+        [tabName]: !prevState[tabName]
+      }
+    })
   }
 
   return (
@@ -151,6 +165,23 @@ const Customizer = () => {
                 ))}
 
                 {generateTabContent()}
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="absolute top-0 right-0 z-10"
+            {...slideAnimation('right')}
+          >
+            <div className="flex items-center min-h-screen">
+              <div className="editortabs-container tabs">
+                {ChangeSizeTabs.map((tab) => (
+                  <Tab 
+                    key={tab.name}
+                    tab={tab}
+                    handleClick={() => handleChangeLogoSizeTab(tab.name)}
+                  />
+                ))}
               </div>
             </div>
           </motion.div>
