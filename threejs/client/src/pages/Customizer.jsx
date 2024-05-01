@@ -24,6 +24,13 @@ const Customizer = () => {
     stylishShirt: false,
   })
 
+  const [activeClothesTab, setActiveClothesTab] = useState({
+    t_shirt: true,
+    sweater: false,
+    sleeveless_t_shirt: false,
+    dress: false,
+  })
+
   // show tab content depending on the activeTab
   const generateTabContent = () => {
     switch (activeEditorTab) {
@@ -117,20 +124,34 @@ const Customizer = () => {
   }
 
   const handleChangeLogoSizeTab = (tabName) => {
-    const coefficient = state.logo_size / 7;
+    const position_coefficient = state.logo_size / 7;
+    const size_coefficient = 0.01 / state.size;
+    // const size_coefficient = ;
     switch (tabName) {
       case "up":
-          state.logo_position.y += coefficient;
+          state.logo_position.y += position_coefficient;
         break;
       case "down":
-          state.logo_position.y -= coefficient;
+          state.logo_position.y -= position_coefficient;
         break;
       case "left":
-        state.logo_position.x -= coefficient;
+        state.logo_position.x -= position_coefficient;
         break;
       case "right":
-        state.logo_position.x += coefficient;
+        state.logo_position.x += position_coefficient;
         break;
+      case "plus":
+        //state.logo_position.z += coefficient;
+        state.logo_size += size_coefficient;
+        state.logo_position.z = state.logo_size/2;
+      break;5
+      case "minus":
+        let temp_size = state.logo_size - size_coefficient;
+        if(temp_size >= (0.15 / state.size)){
+          state.logo_size -= size_coefficient;
+          state.logo_position.z = state.logo_size/2;
+        }
+      break;
       default:
         break;
     }
@@ -160,7 +181,13 @@ const Customizer = () => {
                   <Tab 
                     key={tab.name}
                     tab={tab}
-                    handleClick={() => setActiveEditorTab(tab.name)}
+                    handleClick={() => {
+                      if(activeEditorTab != tab.name){
+                        setActiveEditorTab(tab.name)
+                      } else {
+                        setActiveEditorTab("");
+                      }
+                    }}
                   />
                 ))}
 
@@ -194,12 +221,20 @@ const Customizer = () => {
               <Tab
                 key={tab.name}
                 tab={tab}
+                isFilterTab
+                isActiveTab={activeClothesTab[tab.name]}
                 handleClick={() => {
                   state.currentItem = tab.object,
                   state.rotation = tab.rotation,
                   state.size = tab.size,
                   state.logo_position = tab.logo_position,
-                  state.logo_size = tab.logo_size
+                  state.logo_size = tab.logo_size,
+                  setActiveClothesTab({
+                    t_shirt: tab.name === 't_shirt',
+                    sweater: tab.name === 'sweater',
+                    sleeveless_t_shirt: tab.name === 'sleeveless_t_shirt',
+                    dress: tab.name === 'dress',
+                  });
                 }}
               />
             ))}
