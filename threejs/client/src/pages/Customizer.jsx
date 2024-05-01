@@ -20,7 +20,7 @@ const Customizer = () => {
 
   const [activeEditorTab, setActiveEditorTab] = useState("");
   const [activeFilterTab, setActiveFilterTab] = useState({
-    logoShirt: true,
+    logoShirt: false,
     stylishShirt: false,
   })
 
@@ -144,7 +144,7 @@ const Customizer = () => {
         //state.logo_position.z += coefficient;
         state.logo_size += size_coefficient;
         state.logo_position.z = state.logo_size/2;
-      break;5
+      break;
       case "minus":
         let temp_size = state.logo_size - size_coefficient;
         if(temp_size >= (0.15 / state.size)){
@@ -155,15 +155,6 @@ const Customizer = () => {
       default:
         break;
     }
-
-    // after setting the state, activeFilterTab is updated
-
-    setActiveFilterTab((prevState) => {
-      return {
-        ...prevState,
-        [tabName]: !prevState[tabName]
-      }
-    })
   }
 
   return (
@@ -182,11 +173,7 @@ const Customizer = () => {
                     key={tab.name}
                     tab={tab}
                     handleClick={() => {
-                      if(activeEditorTab != tab.name){
-                        setActiveEditorTab(tab.name)
-                      } else {
-                        setActiveEditorTab("");
-                      }
+                      setActiveEditorTab((prevTab) => (prevTab === tab.name ? '' : tab.name));
                     }}
                   />
                 ))}
@@ -229,6 +216,8 @@ const Customizer = () => {
                   state.size = tab.size,
                   state.logo_position = tab.logo_position,
                   state.logo_size = tab.logo_size,
+                  state.texture_position = tab.texture_position,
+                  state.texture_size = tab.texture_size,
                   setActiveClothesTab({
                     t_shirt: tab.name === 't_shirt',
                     sweater: tab.name === 'sweater',
@@ -246,7 +235,7 @@ const Customizer = () => {
           >
             <CustomButton 
               type="filled"
-              title="Go Back"
+              title="Назад"
               handleClick={() => state.intro = true}
               customStyles="w-fit px-4 py-2.5 font-bold text-sm"
             />
@@ -265,6 +254,14 @@ const Customizer = () => {
                 handleClick={() => handleActiveFilterTab(tab.name)}
               />
             ))}
+
+            <button className='download-btn' onClick={downloadCanvasToImage}>
+              <img
+                src={download}
+                alt='download_image'
+                className='w-3/5 h-3/5 object-contain'
+              />
+            </button>
           </motion.div>
         </>
       )}

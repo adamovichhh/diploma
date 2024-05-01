@@ -73,7 +73,7 @@ export const ClothesTabs = [
   {
     name: "t_shirt",
     icon: t_shirt,
-    object: "/shirt_baked.glb",
+    object: "/t-shirt.glb",
     rotation: 0,
     size: 1,
     logo_position: {
@@ -82,11 +82,17 @@ export const ClothesTabs = [
       z: 0.075,
     },
     logo_size: 0.15,
+    texture_size: 0.62,
+    texture_position: {
+      x: 0,
+      y: -0.05,
+      z: 0,
+    },
   },
   {
     name: "sweater",
     icon: sweater,
-    object: "/sweater_25.glb",
+    object: "/sweater.glb",
     rotation: 0,
     size: 0.007,
     logo_position: {
@@ -95,11 +101,17 @@ export const ClothesTabs = [
       z: 6,
     },
     logo_size: 18,
+    texture_size: 147,
+    texture_position: {
+      x: 0,
+      y: -10,
+      z: 0,
+    }, 
   },
   {
     name: "sleeveless_t_shirt",
     icon: sleeveless_t_shirt,
-    object: "/shirt_without_hands.glb",
+    object: "/sleeveless-t-shirt.glb",
     rotation: 0,
     size: 1,
     logo_position: {
@@ -108,19 +120,31 @@ export const ClothesTabs = [
       z: 0.075,
     },
     logo_size: 0.15,
+    texture_size: 0.62,
+    texture_position: {
+      x: 0,
+      y: -0.05,
+      z: 0,
+    },
   },
   {
     name: "dress",
     icon: dress,
-    object: "/dress_new.glb",
+    object: "/dress.glb",
     rotation: 0,
     size: 0.002,
     logo_position: {
-      x: 20,
-      y: 0.07,
-      z: 0.15,
+      x: 0,
+      y: 0,
+      z: 60,
     },
     logo_size: 149,
+    texture_size: 345,
+    texture_position: {
+      x: 0,
+      y: -35,
+      z: 0,
+    },
   },
 ];
 
