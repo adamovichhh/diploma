@@ -6,7 +6,7 @@ import { Decal, useGLTF, useTexture } from "@react-three/drei";
 
 import state from "../store";
 
-const Shirt = () => {
+const Clothes = () => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF(snap.currentItem);
 
@@ -53,4 +53,4 @@ const Shirt = () => {
   )
 };
 
-export default Shirt;
+export default Clothes;

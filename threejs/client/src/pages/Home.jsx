@@ -40,9 +40,6 @@ const Home = () => {
               Создайте свою уникальную и эксклюзивную одежду с помощью нашего 
               новейшего инструмента для 3D-персонализации. <strong>Дайте волю своему воображение</strong>{" "} 
               и определите свой собственный стиль.
-                {/* Create your unique and exclusive shirt with our brand-new 3D
-                customization tool. <strong>Unleash your imagination</strong>{" "}
-                and define your own style. */}
               </p>
 
               <CustomButton
